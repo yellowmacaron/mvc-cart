@@ -58,9 +58,8 @@ public class CartServlet extends HttpServlet {
 				response.sendRedirect("home?command=book&bookId=" + bookId);
 			} else if (command != null && command.equals("VIEW_CART")) {
 				response.sendRedirect("cart.jsp");
-			} else {
-				// Handle unknown or invalid command
-				response.sendRedirect("home");
+				 request.getRequestDispatcher("cart.jsp").forward(request, response);
+			
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

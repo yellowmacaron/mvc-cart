@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +36,7 @@ public class CartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		try {
 			String command = request.getParameter("command");
 			int bookId = 0;
@@ -47,18 +49,19 @@ public class CartServlet extends HttpServlet {
 				Map<Integer, Book> cart = (Map<Integer, Book>) session.getAttribute("cart");
 
 				if (cart == null) {
-					cart = new HashMap<Integer, Book>();
+					cart = new HashMap<Integer,Book>();
 				}
 				cart.put(book.getId(), book);
 				session.setAttribute("cart", cart);
 				request.setAttribute("book", book);
-				// go back to the home page
-				response.sendRedirect("home?command=DETAIL&bookId=" + bookId);
-
+				// Go back to the home page
+				response.sendRedirect("home?command=book&bookId=" + bookId);
 			} else if (command != null && command.equals("VIEW_CART")) {
 				response.sendRedirect("cart.jsp");
+			} else {
+				// Handle unknown or invalid command
+				response.sendRedirect("home");
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
